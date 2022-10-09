@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Table Pratice</title>
+  </head>
+  <body>
+    <!-- basic table -->
+    <table border="1" width="500" height="200">
+      <thead>
+        <tr>
+          <th>Col 1</th>
+          <th>Col 2</th>
+          <th>Col 3</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>2</td>
+          <td>3</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>5</td>
+          <td rowspan="3">6</td>
+        </tr>
+        <tr>
+          <td>7</td>
+          <td>8</td>
+          <!-- <td>9</td> -->
+        </tr>
+        <tr>
+          <td>10</td>
+          <td>11</td>
+          <!-- <td>12</td> -->
+        </tr>
+        <tr>
+          <td colspan="2">13</td>
+          <!-- <td>14</td> -->
+          <td>15</td>
+        </tr>
+      </tbody>
+    </table>
+    <br />
+    <br />
+    <br />
+    <!-- complex static table -->
+    <table border="1" width="500" height="200">
+      <thead>
+        <tr>
+          <th rowspan="3">Day</th>
+          <th colspan="3">Seminar</th>
+          <th rowspan="3">3</th>
+          <!-- <th>4</th> -->
+        </tr>
+        <tr>
+          <!-- <th>5</th> -->
+          <th colspan="2">Schedule</th>
+          <th rowspan="2">Topic</th>
+          <!-- <th>7</th> -->
+        </tr>
+        <tr>
+          <!-- <th>9</th> -->
+          <th>Begin</th>
+          <th>End</th>
+          <!-- <th>12</th> -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th rowspan="2">Monday</th>
+          <td rowspan="2">8:00 AM</td>
+          <td rowspan="2">5:00 PM</td>
+          <!-- <td>
+            <div>
+              <span>2</span>
+              <span>2</span>
+            </div>
+          </td> -->
+          <td>English</td>
+          <td>5</td>
+        </tr>
+        <tr>
+          <td>Nepali</td>
+        </tr>
+        <tr>
+          <th rowspan="3">Tuesday</th>
+          <td>8:00 AM</td>
+          <td>11:00 AM</td>
+          <td rowspan="2">Science</td>
+        </tr>
+        <tr>
+          <td>11:00 AM</td>
+          <td>2:00 PM</td>
+        </tr>
+        <tr>
+          <td>2:00 PM</td>
+          <td>5:00 AM</td>
+          <td>Math</td>
+        </tr>
+        <tr>
+          <th>Wenesday</th>
+          <td>8:00 AM</td>
+          <td>12:00 PM</td>
+          <td>Sports</td>
+        </tr>
+      </tbody>
+    </table>
+  </body>
+</html>

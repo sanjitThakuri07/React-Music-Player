@@ -4,6 +4,10 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+
+  &__container {
+    margin-left: 20rem;
+  }
 }
 
 .time-control {
@@ -12,9 +16,10 @@
   align-items: center;
   input {
     width: 100%;
-    -webkit-appearance: none;
+    // -webkit-appearance: none;
     background: transparent;
     cursor: pointer;
+    padding: 1rem 0;
   }
 
   p {
