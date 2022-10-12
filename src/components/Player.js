@@ -8,7 +8,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 const Player = React.forwardRef(
-  ({ currentSong, isPlaying, setIsPlaying }, ref) => {
+  ({ currentSong, isPlaying, setIsPlaying, songs, setCurrentSong }, ref) => {
     const [songInfo, setSongInfo] = useState({
       currentTime: 0,
       duration: 0,
@@ -42,6 +42,24 @@ const Player = React.forwardRef(
       setSongInfo({ ...songInfo, currentTime: e.target.value });
     };
 
+    const skipTrackHandler = (direction) => {
+      const currentIndex = songs?.findIndex(
+        (song) => song.id === currentSong.id
+      );
+      console.log({ currentIndex });
+      if (direction.toLowerCase() === "skip-back") {
+        // check when the index becomes negative
+        if ((currentIndex - 1) % songs?.length === -1) {
+          setCurrentSong(songs[songs?.length - 1]);
+          return;
+        }
+        setCurrentSong(songs[(currentIndex - 1) % songs?.length]);
+      } else {
+        // automatically resets to 0 as the remiander will be 0
+        setCurrentSong(songs[(currentIndex + 1) % songs?.length]);
+      }
+    };
+
     return (
       <div className="player">
         <div className="time-control">
@@ -56,7 +74,12 @@ const Player = React.forwardRef(
           <p>{getTime(songInfo.duration)}</p>
         </div>
         <div className="play-control">
-          <FontAwesomeIcon size="2x" className="skip-back" icon={faAngleLeft} />
+          <FontAwesomeIcon
+            size="2x"
+            className="skip-back"
+            icon={faAngleLeft}
+            onClick={() => skipTrackHandler("skip-back")}
+          />
           <FontAwesomeIcon
             size="2x"
             className="play"
@@ -67,6 +90,7 @@ const Player = React.forwardRef(
             size="2x"
             className="skip-forward"
             icon={faAngleRight}
+            onClick={() => skipTrackHandler("skip-forward")}
           />
         </div>
         <audio
