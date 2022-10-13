@@ -16,7 +16,7 @@
   align-items: center;
   input {
     width: 100%;
-    // -webkit-appearance: none;
+    -webkit-appearance: none;
     background: transparent;
     cursor: pointer;
     padding: 1rem 0;
@@ -44,6 +44,8 @@
   position: relative;
   overflow: hidden;
   border-radius: 1rem;
+  background: #80a4ed;
+  // transition: all 3s;
 }
 .animate-track {
   background: rgb(204, 204, 204);
@@ -53,6 +55,7 @@
   top: 0;
   left: 0;
   transform: translateX(0%);
+  transition: all 0.5s;
   padding: 1rem;
   pointer-events: none;
 }

@@ -6,12 +6,14 @@ import {
   faAngleRight,
   faPause,
 } from "@fortawesome/free-solid-svg-icons";
+import { playAudio } from "../utils/utils";
 
 const Player = React.forwardRef(
   ({ currentSong, isPlaying, setIsPlaying, songs, setCurrentSong }, ref) => {
     const [songInfo, setSongInfo] = useState({
       currentTime: 0,
       duration: 0,
+      animationPercentage: 0,
     });
     // event handlers
     const playSongHandler = () => {
@@ -27,8 +29,16 @@ const Player = React.forwardRef(
     const timeUpdateHandler = (e) => {
       const duration = e.target.duration;
       const currentTime = e.target.currentTime;
+      const animation = Math.round(
+        (Math.round(currentTime) / Math.round(duration)) * 100
+      );
 
-      setSongInfo({ ...songInfo, duration, currentTime });
+      setSongInfo({
+        ...songInfo,
+        duration,
+        currentTime,
+        animationPercentage: animation,
+      });
     };
 
     const getTime = (time) => {
@@ -46,32 +56,46 @@ const Player = React.forwardRef(
       const currentIndex = songs?.findIndex(
         (song) => song.id === currentSong.id
       );
-      console.log({ currentIndex });
       if (direction.toLowerCase() === "skip-back") {
         // check when the index becomes negative
         if ((currentIndex - 1) % songs?.length === -1) {
           setCurrentSong(songs[songs?.length - 1]);
-          return;
+        } else {
+          setCurrentSong(songs[(currentIndex - 1) % songs?.length]);
         }
-        setCurrentSong(songs[(currentIndex - 1) % songs?.length]);
       } else {
         // automatically resets to 0 as the remiander will be 0
         setCurrentSong(songs[(currentIndex + 1) % songs?.length]);
       }
+
+      playAudio({ isPlaying, audioRef: ref });
+    };
+
+    // style animation
+    const trackAnimation = {
+      transform: `translateX(${songInfo?.animationPercentage}%)`,
     };
 
     return (
       <div className="player">
         <div className="time-control">
-          <p>{getTime(songInfo.currentTime)}</p>
-          <input
-            min={0}
-            max={songInfo.duration || 0}
-            value={songInfo.currentTime || 0}
-            type="range"
-            onChange={dragHandler}
-          />
-          <p>{getTime(songInfo.duration)}</p>
+          <p>{getTime(songInfo?.currentTime || 0)}</p>
+          <div
+            className="track"
+            style={{
+              backgroundImage: `linear-gradient(to right, ${currentSong?.color[0]}, ${currentSong?.color[1]})`,
+            }}
+          >
+            <input
+              min={0}
+              max={songInfo.duration || 0}
+              value={songInfo.currentTime || 0}
+              type="range"
+              onChange={dragHandler}
+            />
+            <div className="animate-track" style={trackAnimation}></div>
+          </div>
+          <p>{getTime(songInfo?.duration || 0)}</p>
         </div>
         <div className="play-control">
           <FontAwesomeIcon
