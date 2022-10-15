@@ -26,6 +26,15 @@ const Player = React.forwardRef(
       }
     };
 
+    const songEndHandler = async () => {
+      const currentIndex = songs?.findIndex(
+        (song) => song.id === currentSong.id
+      );
+      console.log({ currentIndex });
+      await setCurrentSong(songs[(currentIndex + 1) % songs?.length]);
+      isPlaying && ref.current.play();
+    };
+
     const timeUpdateHandler = (e) => {
       const duration = e.target.duration;
       const currentTime = e.target.currentTime;
@@ -88,8 +97,8 @@ const Player = React.forwardRef(
           >
             <input
               min={0}
-              max={songInfo.duration || 0}
-              value={songInfo.currentTime || 0}
+              max={songInfo?.duration || 0}
+              value={songInfo?.currentTime || 0}
               type="range"
               onChange={dragHandler}
             />
@@ -118,10 +127,11 @@ const Player = React.forwardRef(
           />
         </div>
         <audio
-          src={currentSong.audio}
+          src={currentSong?.audio}
           ref={ref}
           onTimeUpdate={timeUpdateHandler}
           onLoadedMetadata={timeUpdateHandler}
+          onEnded={songEndHandler}
         ></audio>
       </div>
     );
